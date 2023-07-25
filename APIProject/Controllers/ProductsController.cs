@@ -30,7 +30,7 @@ namespace APIProject.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "GetProduct")]
         public ActionResult<Product> Get(int id)
         {
             var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
@@ -41,6 +41,21 @@ namespace APIProject.Controllers
             }
 
             return Ok(product);
+        }
+
+        [HttpPost]
+        public ActionResult Post(Product product)
+        {
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            return new CreatedAtRouteResult("GetProduct", 
+                new { id = product.ProductId }, product);
         }
     }
 }

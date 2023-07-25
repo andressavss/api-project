@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace APIProject.Models
 {
@@ -13,7 +14,8 @@ namespace APIProject.Models
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public int DepartmentId { get; set; }
+        [JsonIgnore]
         public Department? Department { get; set; }
+        public int DepartmentId { get; set; }
     }
 }
