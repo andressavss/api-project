@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
@@ -30,20 +30,20 @@ namespace APIProject.Controllers
 
             if (departments == null)
             {
-                return NotFound();
+                return NotFound("Department not found");
             }
 
             return Ok(departments);
         }
 
-        [HttpGet("{id:int}", Name = "GetDepartments")]
+        [HttpGet("{id:int}", Name = "GetDepartment")]
         public ActionResult<Department> Get(int id)
         {
             var department = _context.Departments.FirstOrDefault(p => p.DepartmentId == id);
 
             if (department == null)
             {
-                return NotFound();
+                return NotFound("Department not found");
             }
 
             return Ok(department);
@@ -54,13 +54,13 @@ namespace APIProject.Controllers
         {
             if (department == null)
             {
-                return BadRequest();
+                return BadRequest("Department is null");
             }
 
             _context.Departments.Add(department);
             _context.SaveChanges();
 
-            return new CreatedAtRouteResult("GetDepartments",
+            return new CreatedAtRouteResult("GetDepartment",
                 new { id = department.DepartmentId }, department);
         }
 
@@ -69,7 +69,7 @@ namespace APIProject.Controllers
         {
             if (id != department.DepartmentId)
             {
-                return BadRequest();
+                return BadRequest("Departments are not equal");
             }
 
             _context.Entry(department).State = EntityState.Modified;
@@ -85,7 +85,7 @@ namespace APIProject.Controllers
 
             if (department == null)
             {
-                return NotFound();
+                return NotFound("Department not found");
             }
 
             _context.Departments.Remove(department);

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace APIProject.Controllers
 
             if (products == null)
             {
-                return NotFound();
+                return NotFound("Product not found");
             }
 
             return Ok(products);
@@ -37,7 +37,7 @@ namespace APIProject.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return NotFound("Product not found");
             }
 
             return Ok(product);
@@ -48,7 +48,7 @@ namespace APIProject.Controllers
         {
             if (product == null)
             {
-                return BadRequest();
+                return BadRequest("Product is null");
             }
 
             _context.Products.Add(product);
@@ -63,7 +63,7 @@ namespace APIProject.Controllers
         {
             if (id != product.ProductId)
             {
-                return BadRequest();
+                return BadRequest("Products are not equal");
             }
 
             _context.Entry(product).State = EntityState.Modified;
@@ -79,7 +79,7 @@ namespace APIProject.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return NotFound("Product not found");
             }
 
             _context.Products.Remove(product);
