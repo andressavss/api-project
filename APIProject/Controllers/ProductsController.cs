@@ -29,5 +29,18 @@ namespace APIProject.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<Product> Get(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
     }
 }
