@@ -71,5 +71,21 @@ namespace APIProject.Controllers
 
             return Ok(product);
         }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return Ok(product);
+        }
     }
 }
