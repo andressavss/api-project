@@ -57,5 +57,19 @@ namespace APIProject.Controllers
             return new CreatedAtRouteResult("GetProduct", 
                 new { id = product.ProductId }, product);
         }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Product product)
+        {
+            if (id != product.ProductId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(product);
+        }
     }
 }
